@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: faithpark-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 10000
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: TOMTOM_API_KEY
+        sync: false
+      - key: API_BIBLE_KEY
+        sync: false
+      - key: API_BIBLE_BIBLE_ID
+        sync: false
