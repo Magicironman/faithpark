@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config();
 
@@ -14,6 +15,94 @@ const apiBibleBibleId = process.env.API_BIBLE_BIBLE_ID || '';
 
 app.use(cors({ origin: corsOrigin === '*' ? true : corsOrigin }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
+app.get('/', (_req, res) => {
+  res.type('html').send(`<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FaithPark APK Download</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --green: #123f29;
+        --gold: #d99b36;
+        --cream: #fff8ed;
+        --ink: #17231b;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(145deg, var(--green), #0b2417 55%, #241425);
+        color: white;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+      main {
+        width: min(720px, 100%);
+        background: rgba(255, 248, 237, 0.96);
+        color: var(--ink);
+        border-radius: 28px;
+        padding: 32px;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      }
+      .brand {
+        color: var(--gold);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 8px 0 10px;
+        font-size: clamp(34px, 7vw, 58px);
+        line-height: 1;
+      }
+      p {
+        font-size: 18px;
+        line-height: 1.55;
+      }
+      .download {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 18px 0;
+        min-height: 58px;
+        padding: 0 28px;
+        border-radius: 999px;
+        background: var(--green);
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .note {
+        background: white;
+        border-left: 5px solid var(--gold);
+        border-radius: 16px;
+        padding: 16px;
+        color: #425247;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand">FaithPark</div>
+      <h1>Download Android APK</h1>
+      <p>Install the FaithPark test app for parking reminders, parked-car photos, Cantonese voice alerts, daily Bible verses, weather, and live traffic.</p>
+      <a class="download" href="/app-release.apk" download>Download FaithPark APK</a>
+      <div class="note">
+        After downloading, Android may ask you to allow installation from unknown sources. After install, allow location, notifications, camera, and microphone if you want to use voice features.
+      </div>
+    </main>
+  </body>
+</html>`);
+});
 
 app.get('/api/health', (_req, res) => {
   res.json({
